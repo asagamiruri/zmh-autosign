@@ -34,7 +34,7 @@ if (currentDay !== lastSignDay && userData.token) {
       GM_setValue(storageKey, currentDay)
 
       const { my_credit: total_credit = undefined, credit = data } = data.mission || {}
-      setDOM(credit, total_credit)
+      setDOM(total_credit, credit)
     }
   })
   // 2. GM_xmlhttpRequest
