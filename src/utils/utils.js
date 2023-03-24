@@ -2,7 +2,7 @@ export const setDOM = (total_credit, credit) => {
   const wbrr = document.querySelector('.wbrr')
 
   const obj = {
-    total_credit: `全部积分： ${total_credit}`,
+    total_credit: total_credit ? `全部积分： ${total_credit}` : '今日已签到',
     credit: credit ? `今日签到：${credit}` : '今日已签到',
   }
   Object.keys(obj).forEach(key => {

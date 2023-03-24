@@ -25,6 +25,7 @@ const lastSignDay = GM_getValue(storageKey, 0)
 const currentDay = Math.floor(new Date().valueOf() / 1000 / 60 / 60 / 24)
 // 日期不同 且 已登录有token
 const canSign = currentDay !== lastSignDay && userData.token
+// const canSign = true
 
 if (canSign) {
   // 仅签到请求还不够，这破系统后端判断条件很迷，目前确认 每日签到、私信列表、锋币管理、任务中心 均点一遍 再发送请求就可成功
@@ -62,15 +63,15 @@ if (canSign) {
     requestList.forEach(obj => {
       requstArr.push(service.post(host + obj.url, obj.payload))
     })
+    return requstArr
   }
   const sign = () => {
     service.post(host + '/userMission').then(res => {
       const { data } = res
-      if (data) {
-        GM_setValue(storageKey, currentDay)
-
+      if (data?.mission) {
         const { my_credit: total_credit = undefined, credit = data } = data.mission || {}
         setDOM(total_credit, credit)
+        GM_setValue(storageKey, currentDay)
       }
     })
   }
