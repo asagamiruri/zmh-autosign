@@ -14,7 +14,7 @@ GM_xmlhttpRequest 和 axios 都试了一下，项目里目前（2023.03.27）目
 
 查了一下： Tampermonkey的GM_setValue()数据存储在**LevelDB**数据库中，该数据库可在“用户数据目录”树中找到。
 
-一旦进入Chrome的“用户数据目录”（例如：C：\Users\USER_JOE\AppData\Local\Google\Chrome\User Data\Default），导航到Local Extension Settings\dhdgffkkebhmkfjojejmpbldmpobfkfo文件夹
+一旦进入Chrome的“用户数据目录”（例如：C:\Users\USER_JOE\AppData\Local\Google\Chrome\User Data\Default），导航到Local Extension Settings\dhdgffkkebhmkfjojejmpbldmpobfkfo文件夹
 
 
 ## 项目相关
