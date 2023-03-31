@@ -1,7 +1,6 @@
 import { GM_getValue, GM_setValue, GM_xmlhttpRequest } from '$'
 // import axios from 'axios'
-import { setDOM, sign_fail, sign_success } from '../utils/utils'
-import { toUrl } from '../utils/url_params'
+import { setDOM, sign_fail, sign_success, toUrl } from '../utils/utils'
 
 // 请求地址
 const path = 'https://zhutix.com/wp-json/b2/v1'
@@ -35,7 +34,8 @@ const makePostRequest = (url, data) => {
   })
 }
 
-// 仅签到请求还不够，这破系统后端判断条件很迷，目前确认 每日签到、私信列表、锋币管理、任务中心 均点一遍 再发送请求就可成功
+// 仅签到请求还不够，这破系统后端判断条件很迷，
+// 目前确认 每日签到、私信列表、锋币管理、任务中心 均点一遍 再发送请求就可成功
 const request = () => {
   const requestList = [
     {

@@ -1,6 +1,5 @@
 import { GM_xmlhttpRequest } from '$'
-import { sign_fail, sign_success } from '../utils/utils'
-import { toUrl } from '../utils/url_params'
+import { sign_fail, sign_success, toUrl } from '../utils/utils'
 
 const path = 'https://actff1.web.sdo.com/20180707jifen/Server'
 const urlList = [

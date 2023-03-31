@@ -44,3 +44,18 @@ export const sign_fail = ({ storageKey, callback, err_msg }) => {
   const name = `❌ ${KEY_MAP[storageKey]} 失败： ${err_msg}`
   GM_registerMenuCommand(name, callback)
 }
+
+export const toUrl = data => {
+  let _result = []
+  for (let key in data) {
+    let value = data[key]
+    if (value.constructor == Array) {
+      value.forEach(_value => {
+        _result.push(key + '=' + _value)
+      })
+    } else {
+      _result.push(key + '=' + value)
+    }
+  }
+  return _result.join('&')
+}
