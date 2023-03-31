@@ -1,12 +1,14 @@
 import { GM_getValue, GM_setValue, GM_xmlhttpRequest } from '$'
-import axios from 'axios'
+// import axios from 'axios'
 import { setDOM, sign_fail, sign_success } from '../utils/utils'
+import { toUrl } from '../utils/url_params'
 
 // 请求地址
 const path = 'https://zhutix.com/wp-json/b2/v1'
 // 本地用户token
 const storageToken = 'zmh_token'
-const userData = GM_getValue(storageToken)
+const b2token = GM_getValue(storageToken)
+const Authorization = 'Bearer ' + b2token
 
 /* // axios带token
 const service = axios.create({
@@ -17,15 +19,16 @@ const service = axios.create({
 }) */
 
 // GM_xmlhttpRequest
-const makePostRequest = (url, callback) => {
+const makePostRequest = (url, data) => {
   return new Promise((resolve, reject) => {
     GM_xmlhttpRequest({
       url,
       method: 'POST',
       headers: {
-        Authorization: 'Bearer ' + userData?.token,
+        Authorization,
         'Content-Type': 'application/x-www-form-urlencoded',
       },
+      data: toUrl(data),
       onload: res => resolve(res),
       onerror: err => reject(err),
     })
@@ -38,33 +41,33 @@ const request = () => {
     {
       page: '每日签到',
       url: '/getUserMission',
-      payload: { paged: 1, count: 10 },
+      data: { paged: 1, count: 10 },
     },
     {
       page: '私信列表',
       url: '/getUserDirectmessageList',
-      payload: { paged: 1 },
+      data: { paged: 1 },
     },
     {
       page: '锋币管理',
       url: '/getUserGoldData',
-      payload: { user_id: 0 },
+      data: { user_id: 0 },
     },
     {
       page: '锋币管理',
       url: '/getGoldList',
-      payload: { type: 'credit', user_id: 0, paged: 1, post_paged: 1 },
+      data: { type: 'credit', user_id: 0, paged: 1, post_paged: 1 },
     },
     {
       page: '任务中心',
       url: '/getTaskData',
-      payload: {},
+      data: {},
     },
   ]
   const requstArr = []
   requestList.forEach(obj => {
-    // requstArr.push(service.post(path + obj.url, obj.payload))
-    requstArr.push(makePostRequest(path + obj.url))
+    // requstArr.push(service.post(path + obj.url, obj.data))
+    requstArr.push(makePostRequest(path + obj.url, obj.data))
   })
   return requstArr
 }
@@ -73,42 +76,54 @@ const sign = storageKey => {
   makePostRequest(path + '/userMission').then(res => {
     if (res.status === 200) {
       const { response: data } = res
+      console.log('zmh签到接口返回：', data)
 
       if (data?.mission) {
         // const { my_credit: total_credit = undefined, credit = data } = data.mission || {}
         sign_success(storageKey)
+      } else {
+        // sign_fail({
+        //   storageKey,
+        //   err_msg: '可能没触发刷新',
+        //   callback: () => {
+        //     // 左键点击菜单手动重新发送签到请求
+        //     sign()
+        //   },
+        // })
       }
     }
   })
 }
 const zmh_sign = storageKey => {
-  if (userData) {
-    Promise.all(request())
-      .then(data => {
-        console.log(data)
+  Promise.all(request())
+    .then(data => {
+      console.log(data)
+      if (data[4].status !== 200) {
+        zmh_token()
+        sign_fail({
+          storageKey,
+          err_msg: '请重新登录',
+          callback: () => {
+            window.open('https://zhutix.com/tag/cursors/')
+          },
+        })
+      } else {
         sign(storageKey)
-      })
-      .catch(err => {
-        console.log('err', err)
-      })
-  } else {
-    zmh_token() // 如果是致美化页面直接获取 userData
-    sign_fail({
-      storageKey,
-      err_msg: '请重新登录',
-      callback: () => {
-        window.open('https://zhutix.com/tag/cursors/')
-      },
+      }
     })
-  }
+    .catch(err => {
+      console.log('err', err)
+    })
 }
 export default zmh_sign
 
 // zmh 的 token 存在油猴里
 const zmh_token = () => {
-  const token = localStorage['userData'] && JSON.parse(localStorage['userData'])
-  console.log(token)
-  GM_setValue(storageToken, token)
+  const b2token = document.cookie
+    .split(';')
+    .filter(item => item.includes('b2_token'))[0]
+    .split('=')[1]
+  GM_setValue(storageToken, b2token)
 }
 
 // 旧方法：已签到后获取积分总额
