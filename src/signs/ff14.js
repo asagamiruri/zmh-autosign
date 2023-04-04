@@ -66,7 +66,7 @@ const ff14_sign = async storageKey => {
       if (Code === -1001 || Jifen) {
         const msg = Jifen ? `积分： ${Jifen}` : '已签到'
         localStorage.jifen = Jifen
-        // sign_success(storageKey, msg)
+        sign_success(storageKey, msg)
       }
     }
   }

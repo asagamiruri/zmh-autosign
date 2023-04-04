@@ -76,9 +76,10 @@ const sign = storageKey => {
   makePostRequest(path + '/userMission').then(res => {
     if (res.status === 200) {
       const { response: data } = res
-      console.log('zmh签到接口返回：', data)
+      const info = JSON.parse(data)
+      console.log('zmh签到接口返回：', info)
 
-      if (data?.mission) {
+      if (info?.mission) {
         // const { my_credit: total_credit = undefined, credit = data } = data.mission || {}
         sign_success(storageKey)
       } else {
@@ -95,6 +96,7 @@ const sign = storageKey => {
   })
 }
 const zmh_sign = storageKey => {
+  // sign(storageKey)
   Promise.all(request())
     .then(data => {
       console.log(data)
