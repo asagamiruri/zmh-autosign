@@ -13,10 +13,10 @@ const urlList = [
     url: '/ff14/HGetRoleList.ashx',
     data: {
       method: 'setff14role',
-      AreaId: 1,
-      AreaName: '陆行鸟',
-      RoleName: '[拉诺西亚]再会的汽笛',
-      Role: '12648490|LaNuoXiYa|3',
+      AreaId: 7,
+      AreaName: '猫小胖',
+      RoleName: '[静语庄园]再會的汽笛',
+      Role: '10035417|JingYuZhuangYuan|3',
     },
   },
   {

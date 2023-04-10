@@ -7,7 +7,7 @@ import ff14_sign from './signs/ff14'
 
 const fnMap = {
   last_sign_time_juejin: juejin_sign, // 掘金
-  last_gacha_time_juejin: juejin_sign, // 掘金免费单抽
+  // last_gacha_time_juejin: juejin_sign, // 掘金免费单抽
   last_sign_time_zmh: zmh_sign, // 致美化
   last_sign_time_ff14: ff14_sign, // 狒狒积分
 }
