@@ -13,11 +13,7 @@ export default defineConfig({
         icon: 'https://vitejs.dev/logo.svg',
         namespace: 'npm/vite-plugin-monkey',
         // match: ['https://zhutix.com/tag/cursors/'],
-        match: [
-          'https://www.baidu.com/*',
-          'https://zhutix.com/tag/cursors/',
-          'https://actff1.web.sdo.com/20180707jifen/*',
-        ],
+        match: ['https://www.baidu.com/*', 'https://zhutix.com/tag/cursors/', 'https://actff1.web.sdo.com/20180707jifen/*'],
         connect: ['zhutix.com', 'api.juejin.cn', 'actff1.web.sdo.com'], // connect 需要的是一个域名而不是url
       },
       build: {
@@ -27,4 +23,14 @@ export default defineConfig({
       },
     }),
   ],
+  build: {
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        //生产环境时移除console
+        drop_console: true,
+        drop_debugger: true,
+      },
+    },
+  },
 })
