@@ -1,5 +1,5 @@
 import { GM_xmlhttpRequest } from '$'
-import { sign_fail, sign_success, toUrl } from '../utils/utils'
+import { formatParams, sign_fail, sign_success } from '../utils/utils'
 
 const path = 'https://actff1.web.sdo.com/20180707jifen/Server'
 const urlList = [
@@ -34,7 +34,7 @@ const makePostRequest = ({ url, data }) => {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
       },
-      data: toUrl(data),
+      data: formatParams(data),
       onload: res => resolve(res),
       onerror: err => reject(err),
     })

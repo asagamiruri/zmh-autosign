@@ -1,6 +1,6 @@
 import { GM_getValue, GM_setValue, GM_xmlhttpRequest } from '$'
 // import axios from 'axios'
-import { setDOM, sign_fail, sign_success, toUrl } from '../utils/utils'
+import { formatParams, sign_fail, sign_success } from '../utils/utils'
 
 // 请求地址
 const path = 'https://zhutix.com/wp-json/b2/v1'
@@ -27,7 +27,7 @@ const makePostRequest = (url, data) => {
         Authorization,
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-      data: toUrl(data),
+      data: formatParams(data),
       onload: res => resolve(res),
       onerror: err => reject(err),
     })
@@ -79,7 +79,7 @@ const sign = storageKey => {
       const info = JSON.parse(data)
       console.log('zmh签到接口返回：', info)
 
-      if (info?.mission) {
+      if (info?.mission || info === '1') {
         // const { my_credit: total_credit = undefined, credit = data } = data.mission || {}
         sign_success(storageKey)
       } else {
@@ -101,7 +101,7 @@ const zmh_sign = storageKey => {
     .then(data => {
       console.log(data)
       if (data[4].status !== 200) {
-        zmh_token()
+        if (window.location.host === 'zhutix.com') zmh_token()
         sign_fail({
           storageKey,
           err_msg: '请重新登录',
@@ -124,7 +124,7 @@ const zmh_token = () => {
   const b2token = document.cookie
     .split(';')
     .filter(item => item.includes('b2_token'))[0]
-    .split('=')[1]
+    ?.split('=')[1]
   GM_setValue(storageToken, b2token)
 }
 
