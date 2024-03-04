@@ -20,18 +20,13 @@ const juejin_sign = storageKey => {
     onload: response => {
       if (response.status === 200) {
         const data = response.response
-        console.log(storageKey, data)
 
         if (storageKey === 'last_sign_time_juejin') {
           // 签到
-          data.err_msg === 'success' || data.err_no === 15001
-            ? sign_success(storageKey)
-            : sign_fail({ storageKey, err_msg: data.err_msg })
+          data.err_msg === 'success' || data.err_no === 15001 ? sign_success(storageKey) : sign_fail({ storageKey, err_msg: data.err_msg })
         } else if (storageKey === 'last_gacha_time_juejin') {
           // 免费单抽
-          data.err_msg === 'success'
-            ? sign_success(storageKey, `奖励： ${data.data.lottery_name}`)
-            : sign_fail({ storageKey, err_msg: data.err_msg })
+          data.err_msg === 'success' ? sign_success(storageKey, `奖励： ${data.data.lottery_name}`) : sign_fail({ storageKey, err_msg: data.err_msg })
         }
       }
     },

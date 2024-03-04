@@ -77,7 +77,6 @@ const sign = storageKey => {
     if (res.status === 200) {
       const { response: data } = res
       const info = JSON.parse(data)
-      console.log('zmh签到接口返回：', info)
 
       if (info?.mission || info === '1') {
         // const { my_credit: total_credit = undefined, credit = data } = data.mission || {}
@@ -99,7 +98,6 @@ const zmh_sign = storageKey => {
   // sign(storageKey)
   Promise.all(request())
     .then(data => {
-      console.log(data)
       if (data[4].status !== 200) {
         if (window.location.host === 'zhutix.com') zmh_token()
         sign_fail({
