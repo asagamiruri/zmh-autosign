@@ -18,6 +18,7 @@ const juejin_sign = storageKey => {
     },
     responseType: 'json',
     onload: response => {
+      console.log(21, response)
       if (response.status === 200) {
         const data = response.response
 

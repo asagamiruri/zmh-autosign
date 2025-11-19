@@ -1,25 +1,25 @@
 import { GM_registerMenuCommand, GM_setValue } from '$'
 import dm_sign from '../signs/dm'
-import juejin_sign from '../signs/juejin'
-import xifan_sign from '../signs/xifan'
+// import juejin_sign from '../signs/juejin'
+// import xifan_sign from '../signs/xifan'
 import zmh_sign from '../signs/zhimeihua'
 
 export const FN_MAP = {
   // last_gacha_time_juejin: juejin_sign, // 掘金免费单抽
   // last_sign_time_ff14: ff14_sign, // 狒狒积分（登录太麻烦了搞不定）
-  last_sign_time_juejin: juejin_sign, // 掘金
+  // last_sign_time_juejin: juejin_sign, // 掘金
   last_sign_time_zmh: zmh_sign, // 致美化
   last_sign_time_3dm: dm_sign, // 3dm
-  last_sign_time_xifan: xifan_sign, // 稀饭动漫
+  // last_sign_time_xifan: xifan_sign, // 稀饭动漫
 }
 
 const KEY_MAP = {
   // last_gacha_time_juejin: '掘金单抽',
   // last_sign_time_ff14: 'ff14',
-  last_sign_time_juejin: '掘金',
+  // last_sign_time_juejin: '掘金',
   last_sign_time_zmh: '致美化',
   last_sign_time_3dm: '3dm',
-  last_sign_time_xifan: '稀饭动漫',
+  // last_sign_time_xifan: '稀饭动漫',
 }
 
 // 旧代码：设置dom提示（zmh）

@@ -9,8 +9,8 @@ export default defineConfig({
     monkey({
       entry: 'src/main.js',
       userscript: {
-        name: '签到测试',
-        icon: 'https://vitejs.dev/logo.svg',
+        name: '（个人）签到',
+        // icon: 'https://vitejs.dev/logo.svg',
         namespace: 'npm/vite-plugin-monkey',
         // match: ['https://zhutix.com/tag/cursors/'],
         match: ['https://www.baidu.com/*', 'https://zhutix.com/tag/cursors/'],
